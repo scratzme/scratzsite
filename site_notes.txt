@@ -1,0 +1,119 @@
+TO REARRANGE COUCH ADMIN PANEL LEFT LISTINGS, reorg 'couch_templates' table in sql or set the 'order' parameter in the template
+
+These templates are a mix of custom routes (blog) and normal couch routes.  Custom routes will have "...routable='1'" in the template and K_IGNORE_CONTEXT in the parenthasis - COUCH::invoke(K_IGNORE_CONTEXT); 
+smart_embed (explained below) and normal cms:embed will also be used.  Smart embed requires file naming convention.
+These notes assume starting from the Celestino template.  All page names reference pages in this site download.
+
+Want this site to be a 
+BLOG
+PORTFOLIO
+RESUME (spec permission only)
+ABOUT
+(see below for menu/page layout)
+
+External Links?
+	-facebook
+	-twitter
+	-instagram
+	-linked in
+	-google plus
+	-pinterest
+	-soundcloud or some other sound-based site (mp3 maybe)
+	-favorites (friendlys)?
+
+BLOG: 
+Using Custom Routes means there are separate pages for each view.  Using 'smart embed' means there must be a 'blog-default' in a 'blog' directory as a snippet.  Every view besides 'page' is a list view, so each of those should be named with its respective listing (list-view, category-view, author-view, archive-view)   
+	Using/creating dynamic folders will create the category for the category view.
+	Adding authors to About page will create a dropdown list for the authors of the blog. (ie: cms:editable name="author" label="Choose Author" opt_values="<cms:pages masterpage="about.php" orderby="page_name" order="asc" ><cms:show k_page_title />=<cms:show k_page_name /> | </cms:pages>" type="dropdown"/ ) - this code creates a dropdown list when creating an author
+	
+PORTFOLIO: (follow the lead of what's there already.  need to see from the laptop of "responsive site 2" if there are more pages I can use for the this portfolio section to link to.  how should the main listing look?)
+	Adobe
+		-Photoshop
+		-Illustrator
+		-After Effects
+		-Premier Pro
+	Websites
+		-hardcorehardball
+		-rexstafforair
+		-dfwcomptech
+		-scratz.me
+	Music (some videos, some sound only)
+		-naturez revenge songs
+		-some other music
+		
+RESUME: (use home-vii.html for main page.  put testimonials after "What I can do for you" section for reference quotes. they will not link to anything individually.	Each resume itself will go to its own respective 'homepage' with pdf download option with the listing being the round icons")
+	Management
+	Customer Service
+	Video/Photos/editing
+	Web
+	Computer/Networking
+	
+ABOUT: general info about me, fiammetta, wrangles, scranton, (equipment?) with a contact form as a submenu from the ABOUT menu item.
+	
+the following are the raw Celestino pages and folders and how they convert to this site.	
+PAGES:
+	HOMEPAGE:
+		index.html = index.php --> homepage
+	RESUME:
+		home-vii.html = resume-home.php --> resume home view. Add the testimonials page to bottom.
+			pages-testimonials.html (no rename necessary- page will be deleted) --> testimonial home view (exerpts). gets added to bottom of resume home view as the listing (home view) for testimonials
+			testimonials-erica.html = testimonial.php --> testimonial page view
+		pages-about.html (need to copy it for later use) = resume.php--> resume page view itself with contact form at bottom.
+		another-service.html (need to copy it for later use) = resume-highlight page view.  resume-highlights list view is a blank page that embeds into resume.php so it won't have any header or anything like that.
+		
+	PORTFOLIO:
+		portfolio-filterable.html = portfolio-home.php --> portfolio home view. filtering effects with the descriptions from 'portfolio-3-columns'
+		portfolio-3-columns.html (no rename necessary- page will be deleted) -->  Add the descriptions to portfolio-home.php
+		portfolio-detail.html = portfolio.php --> portfolio page view. screenshots, other elements from single project in grid at bottom
+	
+	BLOG:
+		blog-big-image.html = blog-home.php --> blog home view (list-view). add exertps under title if possible and emulate the right sidebar as the page view (blog-detail.html)
+		author-celestino.html = blog-folder.php --> blog list view - category-view, author-view, archive-view
+		section-short-codes-stick-posts.html (page will be deleted) and blog-detail.html = blog.php --> blog page view.  use video elelment to use videos in the blog part of the photo slideshow and emulate the 'thumbnail slider' at bottom of blog.php for additional photos. 
+		sliders-thumbnails.html (page will be deleted) --> add the 'thumbnail slider' at bottom of blog.php.
+	
+	ABOUT: 
+		pages-about(copy).html = about-home.php --> about home view
+		pinterest-bobmiler.html = about.php --> about page view.  besides me, kristin, moron, fiammetta?
+		another-service.html = contact.php --> CONTACT form page
+		
+all 'apple-touch-icon-xx.png' (4) need to be converted to site logo 
+favicon.ico needs to be converted to site logo 
+error404.html for the error404 customized page if desired.
+all folders brought over. Do not rename
+
+
+FUNCTIONALITY
+	Index.php -->  Consists of main slider, some portfolio listings with a 'more' button.  Resume highlights.  Resume slider.
+		Main slider - custom animated slides. Slide elements animate on a specific background.  Specific elements, images or text from clonable template linked via relation to clonable slide backgrounds from another clonable template. 
+		Portfolio listings - Limit 8 thumbnails that link to the specific project.  Project page will have links to main portfolio page in breadcrumb, but also below the 'other screen shots' grid.
+		More button links to Portfolio home page
+		Resume highlights.  Static on index template.  4 main highlighted personal traits, customizable thru the index template.
+		Resume Slider - from specific resume with exerpt in the right space and a 1-line summary for the special font.		
+		
+PORTFOLIO:
+has 3 different sections created. PORTFOLIO GALLERY, PORTFOLIO VIDEO, AND PORTFOLIO itself and PORTFOLIO CATEGORY (port_cat). In order to choose the correct images for the portfolio, the gallery must be created first and MUST BE THE EXACT SAME NAME/TITLE AS ITS ASSOCIATED PORTFOLIO'S NAME/TITLE (homepage links won't work unless it is).  The category also needs to be created before the portfolio itself.  The gallery folder will become a dropdown choice when creating the portfolio which will tie the images to the portfolio.  The category will be a checkbox.  When uploading videos there are choices for embedding to Youtube, Vimeo or uploading the mp4,webm, ogg file.  The choice of what portfolio the respective video goes to will be a checkbox section on the portfolio page itself
+TO CREATE A PORTFOLIO make sure the category has been created and start in the PORTFOLIO GALLERY.  First, create the folder, then upload all the images to that folder.
+
+The "opt_values" for the dynamic="opt_values" (opt_values="xxxxxx") need to reside in the SNIPPETS root. otherwise they don't read
+
+
+BLOG:
+Blogs need a gallery and an author.  The author comes from a dropdown listing of "about.php", so that should be filled out first.
+Once the author has been created, refresh 'author.php' if the author doesn't show up in the dropdown box.
+
+
+FOR better spam protection,  use this code instead of captcha:
+<label class="required" for="human">Are you human? Is sky blue or green? (4 characters required) <em>* <cms:if k_error_human>Please answer the question</cms:if></em></label>
+<cms:input type="text" required='1' validator='regex=/^blue$/i' class="input-text required-entry" id="human" name="human"/>
+
+To use cms:smart_embed the file names use folders for page-head, header, nav, content, footer (etc.) and name the files inside the respective folders (views) home, list, archive, default (ex: blog-home, blog-archive, blog-list, blog-default ) and place them in the respective folders in the 'snippets' directory.
+
+
+WHEN WIPING SITE TO START FRESH -  backup db just in case, then wipe out.  
+Admin --> Addons --> Extended --> config.php:  erase what populates the templates [tpl]. If these aren't erased, there will be a loop created at the first login.  After the root index is registered and couch is installed and logged on, then register the templates in "users" directory. First register 'index.php' then add "users/index.php" to the config file. Re-register 'users/index.php'Log out and in and it should be where I can go into the original "users" open my name and click save w/out making changes, then go to the extended 'users' and see my name there.  
+Next, register 'login.php'.  Once this is complete, fill in the login line of the config.php file. thenregister 'lost-Password.php' and fill in the config line with "users/lost-password.php".  Then register 'register.php and fill in the config file with "users/register.php".  If I log out of the admin panel, I should at this time see links for lost password and register.  I should be able to click them and they should take me to their respective screens.  Make sure I'm logged in and then register 'profile.php'.  I should see the form that shows my profile info.
+
+do not style the login pages until all regular site pages have been registered and are working.
+Now I can start to register the appropriate root, etc. pages.  To easily register the index, portfolio, about, and resume pages, erase the html, then regester, then undo the erase.  Otherwise there could be looping going on during registration.
+
